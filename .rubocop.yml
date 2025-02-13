@@ -1,0 +1,17 @@
+Style/Documentation:
+  Enabled: false
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+
+Naming/MethodParameterName:
+  MinNameLength: 2
+  AllowNamesEndingInNumbers: true
+  AllowedNames:
+    - id
+    - tx
+    - to
+
+Metrics/MethodLength:
+  Max: 20
