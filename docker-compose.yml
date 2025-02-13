@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    tty: true
+    restart: always
+    volumes:
+      - .:/app
+      - bundle-cache:/usr/local/bundle
+
+volumes:
+  bundle-cache:
