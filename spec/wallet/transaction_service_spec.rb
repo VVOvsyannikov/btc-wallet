@@ -34,7 +34,7 @@ RSpec.describe Wallet::TransactionService do # rubocop:disable Metrics/BlockLeng
       end
 
       it 'returns an error message' do
-        expect { described_class.send_bitcoin(amount: 0.0000005, to: to_address) }
+        expect { described_class.send_bitcoin(amount: '0.0000005', to: to_address) }
           .to output(/Error: Amount is too small/).to_stdout
       end
     end
@@ -45,7 +45,7 @@ RSpec.describe Wallet::TransactionService do # rubocop:disable Metrics/BlockLeng
       end
 
       it 'broadcasts the transaction' do
-        expect(described_class.send_bitcoin(amount: 0.001, to: to_address)).to be true
+        expect(described_class.send_bitcoin(amount: '0.001', to: to_address)).to be true
       end
     end
   end

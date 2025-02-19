@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'bigdecimal'
 require 'bitcoin'
 require 'fileutils'
 require_relative '../config/zeitwerk_config'
