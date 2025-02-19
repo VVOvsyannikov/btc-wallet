@@ -17,6 +17,10 @@ module ApiServices
         response.unpack1('H*')
       end
 
+      def get_transaction(txid)
+        # TODO: implement
+      end
+
       private
 
       def get_request(path)

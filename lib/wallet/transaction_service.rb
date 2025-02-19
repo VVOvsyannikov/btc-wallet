@@ -29,7 +29,7 @@ module Wallet
       end
 
       def convert_to_satoshis(amount)
-        (amount.to_f * 100_000_000).to_i
+        (BigDecimal(amount) * 100_000_000).to_i
       end
 
       def check_balance(amount_satoshis)
@@ -99,7 +99,7 @@ module Wallet
 
       def calculate_vsize(tx)
         payload = tx.to_payload
-        witness_size = tx.in.sum { |input| input.script_witness.to_payload.bytesize }
+        witness_size = tx.in.sum { |input| input.script_witness&.to_payload&.bytesize.to_i }
         non_witness_size = payload.bytesize - witness_size
         non_witness_size + (witness_size * 0.25).ceil
       end

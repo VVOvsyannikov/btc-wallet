@@ -7,7 +7,15 @@ module ApiServices
         raise NotImplementedError
       end
 
+      def get_transaction(txid)
+        raise NotImplementedError
+      end
+
       def broadcast_transaction(tx_hex)
+        raise NotImplementedError
+      end
+
+      def get_transaction_raw(txid)
         raise NotImplementedError
       end
     end
