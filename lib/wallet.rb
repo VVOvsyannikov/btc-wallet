@@ -39,6 +39,7 @@ module Wallet
         to = options[:to]
 
         raise ArgumentError, 'Amount is required' if amount.nil?
+        raise ArgumentError, "Invalid amount" unless amount.to_s.match?(/\A\d+(\.\d+)?\z/)
         raise ArgumentError, 'Amount must be greater than 0' if amount.to_f <= 0
         raise ArgumentError, 'Recipient address is required' if to.nil? || to.empty?
       end
