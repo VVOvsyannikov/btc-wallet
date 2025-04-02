@@ -1,9 +1,12 @@
+require:
+  - rubocop-rspec
+
 Style/Documentation:
   Enabled: false
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.2.8
 
 Naming/MethodParameterName:
   MinNameLength: 2

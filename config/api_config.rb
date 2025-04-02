@@ -11,8 +11,6 @@ module ApiConfig
 end
 
 ApiConfig.configure do |config|
-  # config.api_url = 'https://blockstream.info/testnet/api'
-  # config.api_service = ApiServices::Blockstream
   config.api_url = 'https://mempool.space/signet/api'
   config.api_service = ApiServices::Mempool
 end

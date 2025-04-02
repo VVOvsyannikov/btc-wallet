@@ -9,22 +9,12 @@ module Wallet
         File.write(filename, private_key)
       end
 
-      def load_address
-        key_file = Dir.glob('key/*.key').first
-        raise ArgumentError, 'No wallet found. Generate a key first.' if key_file.nil?
-
-        File.basename(key_file, '.key')
+      def check_address(address)
+        File.exist?(key_path(address))
       end
 
-      def load_private_key
-        key_file = Dir.glob('key/*.key').first
-        raise ArgumentError, 'No wallet found. Generate a key first.' if key_file.nil?
-
-        File.read(key_file).strip
-      end
-
-      def key_exists?
-        Dir.exist?('key') && !Dir.empty?('key')
+      def load_private_key(address)
+        File.read(key_path(address)).strip
       end
 
       private

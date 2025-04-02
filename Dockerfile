@@ -1,6 +1,8 @@
-FROM ruby:3.0.1-alpine
+FROM ruby:3.2-alpine
 
-RUN apk add --no-cache build-base git bash
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.16/main" >> /etc/apk/repositories \
+    && apk update \
+    && apk add --no-cache build-base git bash libssl1.1
 
 WORKDIR /app
 COPY Gemfile Gemfile.lock ./

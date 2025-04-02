@@ -7,6 +7,7 @@ require 'fileutils'
 require_relative '../config/zeitwerk_config'
 
 ZeitwerkConfig.setup
+Dir[File.expand_path('support/**/*.rb', __dir__)].each { |f| require f }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
