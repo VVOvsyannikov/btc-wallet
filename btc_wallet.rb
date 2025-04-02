@@ -6,41 +6,43 @@ require 'bitcoin'
 require 'json'
 require 'fileutils'
 require 'net/http'
+require 'optparse'
+require 'ostruct'
+require 'stringio'
 
 require_relative 'config/zeitwerk_config'
-ZeitwerkConfig.setup
-
-Bitcoin.network = :testnet3
 
 class CLI
-  def self.start
-    command = ARGV[0]
-    case command
-    when 'generate'
-      Wallet::Command.execute('generate')
-    when 'balance'
-      Wallet::Command.execute('balance')
-    when 'send'
-      amount = ARGV[1]
-      to = ARGV[2]
-      Wallet::Command.execute('send', amount: amount, to: to)
-    else
-      show_help
-    end
-  rescue ArgumentError => e
-    puts "Error: #{e.message}"
-    show_help
-    exit 1
-  end
+  class << self
+    def call
+      setup
+      result = ArgumentParser.call
+      return print_errors(result.errors) if result.failure?
 
-  def self.show_help
-    puts <<~HELP
-      Usage:
-        #{$PROGRAM_NAME} generate
-        #{$PROGRAM_NAME} balance
-        #{$PROGRAM_NAME} send <amount> <to_address>
-    HELP
+      execute_command(result.value)
+    end
+
+    private
+
+    def setup
+      ZeitwerkConfig.setup
+      Bitcoin.network = :testnet3
+    end
+
+    def print_errors(errors)
+      ConsoleOutput.print_errors(errors)
+    end
+
+    def print_result(message)
+      ConsoleOutput.print(message)
+    end
+
+    def execute_command(options)
+      result = Wallet.const_get(options.command.capitalize).call(options)
+
+      result.success? ? print_result(result.message) : print_errors(result.errors)
+    end
   end
 end
 
-CLI.start
+CLI.call

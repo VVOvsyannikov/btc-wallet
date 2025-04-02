@@ -2,46 +2,46 @@
 
 require 'spec_helper'
 
-RSpec.describe Wallet::WalletStorage do # rubocop:disable Metrics/BlockLength
-  describe '#load_address' do
-    let(:test_address) { 'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx' }
+RSpec.describe Wallet::WalletStorage do
+  let(:address) { 'test_address' }
+  let(:private_key) { 'test_private_key' }
+  let(:key_path) { "key/#{address}.key" }
 
-    before do
-      allow(Dir).to receive(:glob).and_return(["key/#{test_address}.key"])
-    end
-
-    it 'returns address' do
-      expect(described_class.load_address).to eq(test_address)
-    end
-
-    context 'when no key exists' do
-      before do
-        allow(Dir).to receive(:glob).and_return([])
-      end
-
-      it 'raises error' do
-        expect { described_class.load_address }.to raise_error(ArgumentError)
-      end
-    end
+  after do
+    FileUtils.rm_rf("key/#{address}.key")
   end
 
   describe '#save_key' do
-    let(:test_address) { 'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx' }
-    let(:test_private_key) { 'test_private_key' }
+    it 'create *.key file' do
+      described_class.save_key(address:, private_key:)
 
-    before do
-      allow(FileUtils).to receive(:mkdir_p)
-      allow(File).to receive(:write)
+      expect(File.exist?(key_path)).to be true
     end
 
-    it 'creates key directory' do
-      expect(FileUtils).to receive(:mkdir_p).with('key')
-      described_class.save_key(address: test_address, private_key: test_private_key)
+    it 'saves the private key to a file' do
+      described_class.save_key(address:, private_key:)
+
+      expect(File.read(key_path).strip).to eq(private_key)
+    end
+  end
+
+  describe '#check_address' do
+    it 'returns true if the address exists' do
+      File.write(key_path, private_key)
+
+      expect(described_class.check_address(address)).to be true
     end
 
-    it 'saves private key to file' do
-      expect(File).to receive(:write).with("key/#{test_address}.key", test_private_key)
-      described_class.save_key(address: test_address, private_key: test_private_key)
+    it 'returns false if the address does not exist' do
+      expect(described_class.check_address(address)).to be false
+    end
+  end
+
+  describe '#load_private_key' do
+    it 'loads the private key from the file' do
+      File.write(key_path, private_key)
+
+      expect(described_class.load_private_key(address)).to eq(private_key)
     end
   end
 end

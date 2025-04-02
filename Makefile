@@ -1,3 +1,10 @@
+# Перехват всех аргументов
+%:
+	@:
+
+# Константы
+DOCKER_CMD = docker compose run --rm app ruby btc_wallet.rb
+
 # Установка проекта
 build_image:
 	docker compose build --no-cache
@@ -6,19 +13,17 @@ build_image:
 install_gems:
 	docker compose run --rm app bundle install
 
-DOCKER_CMD = docker compose run --rm app ruby btc_wallet.rb
-
 # Генерация ключа
 generate:
-	$(DOCKER_CMD) generate
+	$(DOCKER_CMD) -g
 
 # Проверка баланса кошелька
 balance:
-	$(DOCKER_CMD) balance
+	$(DOCKER_CMD) -b -f $(from)
 
-# Отправка биткоинов (make send <amount> <to>)
+# Отправка биткоинов (make send amount=<amount> from=<from> to=<to>)
 send:
-	$(DOCKER_CMD) send $(word 2,$(MAKECMDGOALS)) $(word 3,$(MAKECMDGOALS))
+	$(DOCKER_CMD) -s -a $(amount) -f $(from) -t $(to)
 
 # Для дебага
 bash:
@@ -35,8 +40,4 @@ rubocop:
 # Запуск Rubocop-линтера с безопасной автокоррекцией
 rubocop_ac:
 	docker compose run --rm app bundle exec rubocop -a
-
-# Перехват всех аргументов
-%:
-	@:
 
