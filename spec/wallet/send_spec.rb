@@ -21,7 +21,7 @@ RSpec.describe Wallet::Send do
     raw_tx_hex = '0200000001abcd...'
     allow(ApiConfig).to receive(:api_service).and_return(api_service)
     allow(Wallet::Balance).to receive(:call).and_return(balance)
-    allow(Wallet::WalletStorage).to receive(:load_private_key).and_return(private_key)
+    allow(Wallet::KeyStorage).to receive(:load_private_key).and_return(private_key)
     allow(Bitcoin::Key).to receive(:from_base58).with(private_key).and_return(key_mock)
     allow(Bitcoin::Protocol::Tx).to receive(:new).and_return(tx_mock)
     allow(api_service).to receive(:get_address_utxos).with(options.from).and_return(utxos)
