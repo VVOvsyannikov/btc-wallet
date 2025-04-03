@@ -6,7 +6,6 @@ require 'bitcoin'
 require 'fileutils'
 require_relative '../config/initializer'
 
-Initializer.setup
 Dir[File.expand_path('support/**/*.rb', __dir__)].each { |f| require f }
 
 RSpec.configure do |config|

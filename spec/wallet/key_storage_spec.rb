@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Wallet::WalletStorage do
+RSpec.describe Wallet::KeyStorage do
   let(:address) { 'test_address' }
   let(:private_key) { 'test_private_key' }
   let(:key_path) { "key/#{address}.key" }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wallet
-  class WalletStorage
+  class KeyStorage
     class << self
       def save_key(address:, private_key:)
         FileUtils.mkdir_p('key')

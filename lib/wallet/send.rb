@@ -60,7 +60,7 @@ module Wallet
       end
 
       def load_private_key(address)
-        WalletStorage.load_private_key(address)
+        KeyStorage.load_private_key(address)
       end
 
       def fetch_utxos_with_tx(utxos)

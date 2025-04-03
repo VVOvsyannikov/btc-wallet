@@ -11,7 +11,7 @@ RSpec.describe Wallet::Balance do
     let(:result) { Result.success(100_000, balance_message) }
 
     before do
-      allow(Wallet::WalletStorage).to receive(:check_address).with(from).and_return(true)
+      allow(Wallet::KeyStorage).to receive(:check_address).with(from).and_return(true)
       allow(ApiConfig).to receive(:api_service).and_return(api_service)
       allow(api_service).to receive(:get_address_utxos).with(from).and_return(utxos)
     end

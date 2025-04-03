@@ -17,7 +17,7 @@ module Wallet
         address = key.addr
         private_key = key.priv
 
-        WalletStorage.save_key(address:, private_key:)
+        KeyStorage.save_key(address:, private_key:)
 
         address
       end

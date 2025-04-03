@@ -12,18 +12,18 @@ RSpec.describe Wallet::Generate do
 
     before do
       allow(Bitcoin::Key).to receive(:generate).and_return(bitcoin_key)
-      allow(Wallet::WalletStorage).to receive(:save_key).and_return(true)
+      allow(Wallet::KeyStorage).to receive(:save_key).and_return(true)
     end
 
     it 'generates and saves new key' do
       expect(described_class.call(options).value).to eq(addr)
     end
 
-    context 'when WalletStorage raise error' do
+    context 'when KeyStorage raise error' do
       let(:result) { Result.failure(wrong_message) }
 
       before do
-        allow(Wallet::WalletStorage).to receive(:save_key).and_raise(StandardError)
+        allow(Wallet::KeyStorage).to receive(:save_key).and_raise(StandardError)
       end
 
       it 'returns Result.failure' do
