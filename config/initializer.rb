@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 
 require 'zeitwerk'
+require 'bundler/setup'
+require 'bigdecimal'
+require 'bitcoin'
+require 'json'
+require 'fileutils'
+require 'net/http'
+require 'optparse'
+require 'ostruct'
+require 'stringio'
 
-class ZeitwerkConfig
+class Initializer
   class << self
     def setup
       loader = Zeitwerk::Loader.new
@@ -14,3 +23,6 @@ class ZeitwerkConfig
     end
   end
 end
+
+Initializer.setup
+Bitcoin.network = :testnet3
