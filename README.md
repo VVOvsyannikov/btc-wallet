@@ -24,21 +24,21 @@ A command-line interface for managing Bitcoin testnet transactions.
     ```
     make generate
     ```
-    The private key will be saved in the key/ directory.
+    The private key will be saved in the `/key/<wallet_address>.key` file.
 
 
 2. Check Balance
     ```
-    make balance
+    make balance from=<wallet_address>
     ```
 
 3. Send Bitcoin
      ```
-    make send <amount_in_btc> <recipient_address>
+    make send amount=<amount_in_btc> from=<wallet_address> to=<recipient_address>
      ```
     Example:
      ```
-    make send 0.001 mzR8ELqX7nEJATBYAstNneJiR2uXyozkB6
+    make send amount=0.001 from=mzR8ELqX7nEJATBYAstNneJiR2uXyozkB6 to=n1ranndRzrPQmswW2uktbrBEoWDmhSov7S
      ```
    
 ## Debugging (development)
