@@ -1,21 +1,10 @@
 # frozen_string_literal: true
 
-require 'bundler/setup'
-require 'bigdecimal'
-require 'bitcoin'
-require 'json'
-require 'fileutils'
-require 'net/http'
-require 'optparse'
-require 'ostruct'
-require 'stringio'
-
-require_relative 'config/zeitwerk_config'
+require_relative 'config/initializer'
 
 class CLI
   class << self
     def call
-      setup
       result = ArgumentParser.call
       return print_errors(result.errors) if result.failure?
 
@@ -23,11 +12,6 @@ class CLI
     end
 
     private
-
-    def setup
-      ZeitwerkConfig.setup
-      Bitcoin.network = :testnet3
-    end
 
     def print_errors(errors)
       ConsoleOutput.print_errors(errors)
