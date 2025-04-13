@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wallet
-  class Balance
+  class Balance < Base
     class << self
       def call(options)
         address = options.from
@@ -46,10 +46,6 @@ module Wallet
           Pending Balance: #{unconfirmed_balance.to_i} satoshis (#{unconfirmed_balance / 100_000_000} BTC)
           Total Balance: #{total_balance.to_i} satoshis (#{total_balance / 100_000_000} BTC)
         INFO
-      end
-
-      def error_message
-        ['Something went wrong, please, try later']
       end
     end
   end

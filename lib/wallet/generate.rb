@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wallet
-  class Generate
+  class Generate < Base
     class << self
       def call(_options)
         key_address = create_key
@@ -24,10 +24,6 @@ module Wallet
 
       def build_message(address)
         "Generated new key:\nAddress: #{address}\nPrivate key saved to: key/#{address}.key"
-      end
-
-      def error_message
-        ['Something went wrong, please, try later']
       end
     end
   end
