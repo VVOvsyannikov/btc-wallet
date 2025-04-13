@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wallet
-  class Send
+  class Send < Base
     class << self
       include Bitcoin::Builder
 
@@ -117,10 +117,6 @@ module Wallet
       def broadcast_transaction(tx)
         tx_hex = tx.to_payload.unpack1('H*')
         ApiConfig.api_service.broadcast_transaction(tx_hex)
-      end
-
-      def error_message
-        ['Something went wrong, please, try later']
       end
     end
   end
